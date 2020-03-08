@@ -19,6 +19,9 @@ class ODBCDriverConnection extends Connection
 		$grammarConfig = $this->getGrammarConfig();
 
 		if ($grammarConfig) {
+			if (class_exists($grammarConfig)) {
+				return $this->withTablePrefix(new $grammarConfig);
+			}
 			$packageGrammar = "Grammars\\" . $grammarConfig;
 			if (class_exists($packageGrammar)) {
 				return $this->withTablePrefix(new $packageGrammar);
